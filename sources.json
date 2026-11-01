@@ -1,0 +1,21 @@
+[
+  {"name":"The Hindu","lang":"en","type":"Newspaper","url":"https://www.thehindu.com/news/national/feeder/default.rss"},
+  {"name":"The Hindu (Tamil Nadu)","lang":"en","type":"Newspaper","region":"Tamil Nadu","url":"https://www.thehindu.com/news/national/tamil-nadu/feeder/default.rss"},
+  {"name":"Times of India","lang":"en","type":"Newspaper","url":"https://timesofindia.indiatimes.com/rssfeedstopstories.cms"},
+  {"name":"Indian Express","lang":"en","type":"Newspaper","url":"https://indianexpress.com/section/india/feed/"},
+  {"name":"Hindustan Times","lang":"en","type":"Newspaper","url":"https://www.hindustantimes.com/feeds/rss/india-news/rssfeed.xml"},
+  {"name":"NDTV","lang":"en","type":"TV","url":"https://feeds.feedburner.com/ndtvnews-top-stories"},
+  {"name":"India Today","lang":"en","type":"TV","url":"https://www.indiatoday.in/rss/1206578"},
+  {"name":"News18","lang":"en","type":"TV","url":"https://www.news18.com/commonfeeds/v1/eng/rss/india.xml"},
+  {"name":"All India Radio","lang":"en","type":"Radio","url":"https://newsonair.gov.in/feed/"},
+  {"name":"The Hindu Tamil","lang":"ta","type":"Newspaper","url":"https://www.hindutamil.in/feed"},
+  {"name":"OneIndia Tamil","lang":"ta","type":"Digital","url":"https://tamil.oneindia.com/rss/tamil-news-fb.xml"},
+  {"name":"News18 Tamil","lang":"ta","type":"TV","url":"https://tamil.news18.com/commonfeeds/v1/tam/rss/news.xml"},
+  {"name":"Aaj Tak","lang":"hi","type":"TV","url":"https://www.aajtak.in/rssfeeds/?id=home"},
+  {"name":"OneIndia Hindi","lang":"hi","type":"Digital","url":"https://hindi.oneindia.com/rss/hindi-news-fb.xml"},
+  {"name":"OneIndia Malayalam","lang":"ml","type":"Digital","url":"https://malayalam.oneindia.com/rss/malayalam-news-fb.xml"},
+  {"name":"OneIndia Telugu","lang":"te","type":"Digital","url":"https://telugu.oneindia.com/rss/telugu-news-fb.xml"},
+  {"name":"OneIndia Kannada","lang":"kn","type":"Digital","url":"https://kannada.oneindia.com/rss/kannada-news-fb.xml"},
+  {"name":"The Hindu Health","lang":"en","type":"Newspaper","category":"Health","url":"https://www.thehindu.com/sci-tech/health/feeder/default.rss"},
+  {"name":"Indian Express Health","lang":"en","type":"Newspaper","category":"Health","url":"https://indianexpress.com/section/lifestyle/health/feed/"}
+]

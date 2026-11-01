@@ -1,0 +1,15 @@
+[
+  {"name": "Dainik Jagran", "lang": "hi", "type": "Newspaper", "url": "https://www.jagran.com/news/latest-news-rss.xml"},
+  {"name": "Navbharat Times", "lang": "hi", "type": "Newspaper", "url": "https://navbharattimes.indiatimes.com/rssfeedstopstories.cms"},
+  {"name": "Aaj Tak", "lang": "hi", "type": "TV", "url": "https://www.aajtak.in/rssfeeds/?id=home"},
+  {"name": "News18 Hindi", "lang": "hi", "type": "TV", "url": "https://hindi.news18.com/commonfeeds/v1/hin/rss/india.xml"},
+  {"name": "OneIndia Hindi", "lang": "hi", "type": "Digital", "url": "https://hindi.oneindia.com/rss/hindi-news-fb.xml"},
+  {"name": "News18 Malayalam", "lang": "ml", "type": "TV", "url": "https://malayalam.news18.com/commonfeeds/v1/mal/rss/news.xml"},
+  {"name": "OneIndia Malayalam", "lang": "ml", "type": "Digital", "url": "https://malayalam.oneindia.com/rss/malayalam-news-fb.xml"},
+  {"name": "News18 Telugu", "lang": "te", "type": "TV", "url": "https://telugu.news18.com/commonfeeds/v1/tel/rss/news.xml"},
+  {"name": "OneIndia Telugu", "lang": "te", "type": "Digital", "url": "https://telugu.oneindia.com/rss/telugu-news-fb.xml"},
+  {"name": "News18 Kannada", "lang": "kn", "type": "TV", "url": "https://kannada.news18.com/commonfeeds/v1/kan/rss/news.xml"},
+  {"name": "OneIndia Kannada", "lang": "kn", "type": "Digital", "url": "https://kannada.oneindia.com/rss/kannada-news-fb.xml"},
+  {"name": "The Hindu Health", "lang": "en", "type": "Newspaper", "category": "Health", "url": "https://www.thehindu.com/sci-tech/health/feeder/default.rss"},
+  {"name": "Indian Express Health", "lang": "en", "type": "Newspaper", "category": "Health", "url": "https://indianexpress.com/section/lifestyle/health/feed/"}
+]

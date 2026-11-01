@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ta">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>இன்றைய செய்திகள் | India News</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Tamil:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#edf3f1;--ink:#10231f;--mute:#53675f;--line:#c9d6d1;--teal:#0f6b5c;--live:#d9412b;--chip:#dbe8e4}
+@media(prefers-color-scheme:dark){:root{--bg:#0e1a17;--ink:#e6f0ed;--mute:#90a69e;--line:#27392f;--teal:#5cc2ae;--live:#ff6a52;--chip:#1a2c27}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 "Anek Tamil",system-ui,sans-serif}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:12px 20px}
+.wrap{max-width:760px;margin:auto}
+.top{display:flex;align-items:center;gap:14px}
+h1{margin:0;flex:1;font-size:26px;font-weight:800;line-height:1.2}
+h1 small{display:block;font-size:14px;font-weight:400;color:var(--mute)}
+.ring{position:relative;width:46px;height:46px;flex:none}
+.ring svg{transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:3}
+.ring .bg{stroke:var(--line)}
+.ring .fg{stroke:var(--live);stroke-dasharray:113.1;stroke-linecap:round;transition:stroke-dashoffset 1s linear}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:14px;font-weight:600}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.filters button{font:inherit;font-size:14px;padding:2px 14px;border-radius:99px;border:1px solid var(--line);background:none;color:var(--ink);cursor:pointer}
+.filters button[aria-pressed=true]{background:var(--teal);border-color:var(--teal);color:#fff}
+.filters button:focus-visible,.share a:focus-visible,.share button:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.filters i{width:1px;background:var(--line);margin:0 4px}
+.filters .lbl{font-size:14px;color:var(--mute);align-self:center}
+.meta em{font-style:normal;color:var(--teal)}
+main{max-width:760px;margin:auto;padding:0 20px 60px}
+.msg{color:var(--mute);padding:14px 0;font-size:15px}
+article{padding:18px 0 16px 14px;border-bottom:1px solid var(--line);border-left:3px solid transparent}
+article.new{border-left-color:var(--teal);animation:fade 6s forwards}
+@keyframes fade{to{border-left-color:transparent}}
+.meta{font-size:14px;color:var(--mute)}
+.meta strong{color:var(--teal);font-weight:600}
+h2{margin:2px 0 4px;font-size:21px;line-height:1.4;font-weight:600}
+h2 a{color:inherit;text-decoration:none}h2 a:hover{text-decoration:underline}
+p{margin:0;color:var(--mute);font-size:15.5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.share{display:flex;gap:8px;margin-top:10px}
+.share a,.share button{font:inherit;font-size:14px;padding:2px 14px;border-radius:8px;border:1px solid var(--line);background:var(--chip);color:var(--ink);text-decoration:none;cursor:pointer}
+.share .wa{background:#1f9d55;border-color:#1f9d55;color:#fff}
+.share .fb{background:#1877f2;border-color:#1877f2;color:#fff}
+@media(prefers-reduced-motion:reduce){article.new{animation:none}.ring .fg{transition:none}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="top">
+    <h1>இன்றைய செய்திகள்<small>Today's news from India</small></h1>
+    <div class="ring" title="Next refresh"><svg width="46" height="46"><circle class="bg" cx="23" cy="23" r="18"/><circle class="fg" id="fg" cx="23" cy="23" r="18"/></svg><b id="cd">10</b></div>
+  </div>
+  <div class="filters" id="filters"></div>
+</div></header>
+<main><div class="msg" id="msg">Loading news…</div><div id="feed"></div></main>
+<script>
+const READ=[['ta','தமிழ்'],['en','English']];
+const REGIONS=[['All','All / அனைத்தும்'],['National','National / தேசிய'],['Tamil Nadu','Tamil Nadu / தமிழ்நாடு']];
+const TYPES=['All','Newspaper','TV','Radio','Digital'];
+const LN={en:'English',ta:'தமிழ்',hi:'Hindi',ml:'Malayalam',te:'Telugu',kn:'Kannada',bn:'Bengali',mr:'Marathi',gu:'Gujarati',pa:'Punjabi',ur:'Urdu'};
+let read='ta',region='All',type='All',data=[],seen=new Set(),first=true,left=10;
+try{read=localStorage.getItem('read')||'ta'}catch{}
+const $=id=>document.getElementById(id);
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function drawFilters(){
+  $('filters').innerHTML='<span class="lbl">Read in</span>'+READ.map(([k,l])=>`<button data-r="${k}" aria-pressed="${read===k}">${l}</button>`).join('')+'<i></i>'+
+    REGIONS.map(([k,l])=>`<button data-g="${k}" aria-pressed="${region===k}">${l}</button>`).join('')+'<i></i>'+
+    TYPES.map(t=>`<button data-t="${t}" aria-pressed="${type===t}">${t}</button>`).join('');
+}
+$('filters').onclick=e=>{const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.r){read=b.dataset.r;try{localStorage.setItem('read',read)}catch{}}
+  if(b.dataset.g)region=b.dataset.g;if(b.dataset.t)type=b.dataset.t;drawFilters();render();};
+
+function ago(ms,l){const m=Math.max(1,Math.round((Date.now()-ms)/60000));
+  if(m<60)return l==='ta'?`${m} நிமிடம் முன்`:`${m} min ago`;
+  const h=Math.round(m/60);if(h<24)return l==='ta'?`${h} மணி நேரம் முன்`:`${h} h ago`;
+  const d=Math.round(h/24);return l==='ta'?`${d} நாள் முன்`:`${d} d ago`;}
+
+function render(){
+  const list=data.filter(i=>(region==='All'||i.region===region)&&(type==='All'||i.type===type)).slice(0,120);
+  $('msg').textContent=list.length?'':'No stories match these filters yet. Try All.';
+  const ta=read==='ta';
+  $('feed').innerHTML=list.map(i=>{
+    const tr=i.tr&&i.tr[read]; const sh=tr||{title:i.title,summary:i.summary};
+    const note=i.lang===read?'':tr?(ta?'மொழிபெயர்க்கப்பட்டது':'Translated from '+(LN[i.lang]||i.lang)):(ta?'மொழிபெயர்க்கப்படுகிறது…':'Translating…');
+    const reg=i.region==='Tamil Nadu'?(ta?'தமிழ்நாடு':'Tamil Nadu'):(ta?'தேசிய':'National');
+    const t=encodeURIComponent(sh.title+'\n'+i.link),u=encodeURIComponent(i.link);
+    return `<article class="${i.isNew?'new':''}">
+      <div class="meta"><strong>${esc(i.source)}</strong> &nbsp;${reg} &nbsp;${i.type} &nbsp;${ago(i.date,read)}${note?` &nbsp;<em>${note}</em>`:''}</div>
+      <h2><a href="${esc(i.link)}" target="_blank" rel="noopener">${esc(sh.title)}</a></h2>
+      ${sh.summary?`<p>${esc(sh.summary)}</p>`:''}
+      <div class="share">
+        <a class="wa" href="https://wa.me/?text=${t}" target="_blank" rel="noopener">Share on WhatsApp</a>
+        <a class="fb" href="https://www.facebook.com/sharer/sharer.php?u=${u}" target="_blank" rel="noopener">Share on Facebook</a>
+        <button data-copy="${esc(i.link)}">Copy link</button>
+      </div></article>`}).join('');
+}
+$('feed').onclick=e=>{const b=e.target.closest('[data-copy]');if(!b)return;
+  navigator.clipboard.writeText(b.dataset.copy).then(()=>{b.textContent='Link copied';setTimeout(()=>b.textContent='Copy link',1500)});};
+
+async function load(){
+  try{
+    const r=await fetch('/api/news',{cache:'no-store'});if(!r.ok)throw 0;
+    const j=await r.json();
+    data=j.items.map(i=>{const n=!first&&!seen.has(i.link);seen.add(i.link);return{...i,isNew:n}});
+    first=false;render();
+  }catch{ $('msg').textContent="Can't reach the news server. Retrying in 10 seconds."; }
+}
+function tick(){
+  left--; if(left<=0){left=10;load();}
+  $('cd').textContent=left; $('fg').style.strokeDashoffset=113.1*(1-left/10);
+}
+drawFilters();load();setInterval(tick,1000);
+</script>
+</body>
+</html>
